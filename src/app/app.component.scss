@@ -19,13 +19,3 @@ main {
     -o-background-size: cover;
     background-size: cover;
 }
-
-.top-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin: 30px;
-    box-sizing: border-box;
-}
