@@ -8,7 +8,7 @@ const typeDefs = `#graphql
         type: String! # type of media, either "Image", "Panorama", or "Video"
         contentURL: String! # the url to either the video or the image
         thumbnailURL: String! # the url to the thumbnail of the media
-        URL: String! # the web path that this piece of media can be accessed at
+        webURL: String! # the web path that this piece of media can be accessed at
         description: String # the description, if it exists
     }
 
@@ -17,17 +17,17 @@ const typeDefs = `#graphql
         title: String! # the title of the collection
         description: String # the description of the collection
         media: [Media!]! # list of media items in the collection
-        URL: String! # the web path that this collection can be accessed at
+        webURL: String! # the web path that this collection can be accessed at
     }
 
     # Defines the operations that the user can take for read
     type Query {
         getAllMedia: [Media]
         getMediaById(id: ID!): Media
-        getMediaByURL(URL: String!): Media
+        getMediaByURL(webURL: String!): Media
         getAllCollections: [Collection]
         getCollectionById(id: ID!): Collection
-        getCollectionByURL(URL: String!): Collection
+        getCollectionByURL(webURL: String!): Collection
     }
 
     # Defines the operations that the user can take for write
@@ -41,14 +41,14 @@ const typeDefs = `#graphql
             type: String!,
             contentURL: String!,
             thumbnailURL: String!,
-            URL: String!,
+            webURL: String!,
             description: String,
         ): Media
 
         # updates a piece of media
         updateMedia(
             id: ID!,
-            URL: String!,
+            webURL: String!,
             date: String!,
             title: String!,
             uploadDate: String!,
@@ -66,7 +66,7 @@ const typeDefs = `#graphql
             title: String!,
             description: String,
             media: [ID!]!, # list of media IDs
-            URL: String!
+            webURL: String!
         ): Collection
 
         # updates a collection
@@ -75,7 +75,7 @@ const typeDefs = `#graphql
             title: String!,
             description: String,
             media: [ID!]!, # list of media IDs
-            URL: String!
+            webURL: String!
         ): Collection
 
         # deletes a collection
