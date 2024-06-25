@@ -19,3 +19,47 @@ main {
     -o-background-size: cover;
     background-size: cover;
 }
+
+.top-row {
+    // a row with a margin of 3em to space it from the edges
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 3rem;
+    width: 100%;
+}
+
+.title-box {
+    // a simple flex column
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 1.5rem 2.5rem;
+}
+
+.subtitle {
+    // subtitle text
+    font-size: 1.5rem;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+@media (max-width: 450px) {
+    .top-row {
+        justify-content: center;
+    }
+
+    .title-box {
+        margin: 1rem 2rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+}
