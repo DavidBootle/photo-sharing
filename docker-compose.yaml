@@ -1,0 +1,42 @@
+version: "3"
+name: photoshare
+
+services:
+
+  frontend:
+    container_name: PhotoShare_FrontEnd
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    image: photoshare/frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - mongodb
+      - backend
+    command: ["node_modules/.bin/ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]
+    volumes:
+      - ./front-end/src:/usr/src/app/src
+  
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: PhotoShare_MongoDB
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata:/data/db
+  
+  backend:
+    container_name: PhotoShare_BackEnd
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    image: photoshare/backend
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongodb
+    command: ['npm', 'start']
+
+volumes:
+  dbdata:
