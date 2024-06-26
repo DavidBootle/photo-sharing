@@ -113,6 +113,14 @@ interface Media {
     description: string,
 }
 
+interface Collection {
+    id: string,
+    title: string,
+    description: string,
+    media: [string],
+    webURL: string,
+}
+
 const mapId = (doc) => {
     if (doc) {
         doc.id = doc._id.toString();
@@ -125,37 +133,37 @@ const mapId = (doc) => {
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
     Query: {
-        getAllMedia: async (_, __, { db }) => {
+        getAllMedia: async (_, __, { db }: DBContext) => {
             const media = await db.collection('media').find().toArray();
             return media.map(mapId);
         },
-        getMediaById: async (_, { id }, { db }) => {
+        getMediaById: async (_, { id }: Media, { db }: DBContext) => {
             const media = await db.collection('media').findOne({ _id: new ObjectId(id) });
             return mapId(media);
         },
-        getMediaByURL: async (_, { webURL }, { db }) => {
+        getMediaByURL: async (_, { webURL }: Media, { db }: DBContext) => {
             const media = await db.collection('media').findOne({ webURL });
             return mapId(media);
         },
-        getAllCollections: async (_, __, { db }) => {
+        getAllCollections: async (_, __, { db }: DBContext) => {
             const collections = await db.collection('collections').find().toArray();
             return collections.map(mapId);
         },
-        getCollectionById: async (_, { id }, { db }) => {
+        getCollectionById: async (_, { id }: Collection, { db }: DBContext) => {
             const collection = await db.collection('collections').findOne({ _id: new ObjectId(id) });
             return mapId(collection);
         },
-        getCollectionByURL: async (_, { webURL }, { db }) => {
+        getCollectionByURL: async (_, { webURL }: Collection, { db }: DBContext) => {
             const collection = await db.collection('collections').findOne({ webURL });
             return mapId(collection);
         },
     },
     Mutation: {
-        createMedia: async (_, { date, title, uploadDate, type, contentURL, thumbnailURL, webURL, description }, { db }) => {
+        createMedia: async (_, { date, title, uploadDate, type, contentURL, thumbnailURL, webURL, description }: Media, { db }: DBContext) => {
             const result = await db.collection('media').insertOne({ date, title, uploadDate, type, contentURL, thumbnailURL, webURL, description });
             return mapId(await db.collection('media').findOne({ _id: result.insertedId }));
         },
-        updateMedia: async (_, { id, date, title, uploadDate, type, contentURL, thumbnailURL, webURL, description }, { db }) => {
+        updateMedia: async (_, { id, date, title, uploadDate, type, contentURL, thumbnailURL, webURL, description }: Media, { db }: DBContext) => {
             const result = await db.collection('media').findOneAndUpdate(
                 { _id: new ObjectId(id) },
                 { $set: { date, title, uploadDate, type, contentURL, thumbnailURL, webURL, description } },
@@ -163,16 +171,16 @@ const resolvers = {
             );
             return mapId(result.value);
         },
-        deleteMedia: async (_, { id }, { db }) => {
+        deleteMedia: async (_, { id }: Media, { db }: DBContext) => {
             const result = await db.collection('media').findOneAndDelete({ _id: new ObjectId(id) });
             return mapId(result.value);
         },
-        createCollection: async (_, { title, description, media, webURL }, { db }) => {
+        createCollection: async (_, { title, description, media, webURL }: Collection, { db }: DBContext) => {
             const mediaItems = await db.collection('media').find({ _id: { $in: media.map(id => new ObjectId(id)) } }).toArray();
             const result = await db.collection('collections').insertOne({ title, description, media: mediaItems, webURL });
             return mapId(await db.collection('collections').findOne({ _id: result.insertedId }));
         },
-        updateCollection: async (_, { id, title, description, media, webURL }, { db }) => {
+        updateCollection: async (_, { id, title, description, media, webURL }: Collection, { db }: DBContext) => {
             const mediaItems = await db.collection('media').find({ _id: { $in: media.map(id => new ObjectId(id)) } }).toArray();
             const result = await db.collection('collections').findOneAndUpdate(
                 { _id: new ObjectId(id) },
@@ -181,7 +189,7 @@ const resolvers = {
             );
             return mapId(result.value);
         },
-        deleteCollection: async (_, { id }, { db }) => {
+        deleteCollection: async (_, { id }: Collection, { db }: DBContext) => {
             const result = await db.collection('collections').findOneAndDelete({ _id: new ObjectId(id) });
             return mapId(result.value);
         },
