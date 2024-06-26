@@ -3,11 +3,11 @@
     // a row with a margin of 3em to space it from the edges
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     box-sizing: border-box;
     padding: 3rem;
-    width: 100%;
+    width: 100vw;
 }
 
 .title-box {
@@ -29,16 +29,66 @@
     font-weight: 600;
 }
 
-@media (max-width: 450px) {
-    .top-row {
-        justify-content: center;
+.page-selection-box {
+    // create a row with 1rem margins and a gap of 0.75rem for the buttons
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    margin: 1rem;
+}
+
+.control-text {
+    font-size: 1.5rem;
+    color: #D9D9D9;
+    opacity: 0.3;
+    transition: color 0.2s, opacity 0.2s;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+        opacity: 0.7;
     }
 
+    &.active {
+        color: white;
+        opacity: 1;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.seperator {
+    width: 0.125rem;
+    background-color: white;
+}
+
+@media (max-width: 450px) {
     .title-box {
         margin: 1rem 2rem;
+        align-items: center;
+        text-align: center;
     }
 
     .title {
         font-size: 2rem;
+    }
+
+    .page-selection-box {
+        margin: 0.5rem;
+    }
+
+    .control-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 750px) {
+    .top-row {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
     }
 }

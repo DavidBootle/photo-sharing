@@ -9,5 +9,9 @@ import { TextBoxComponent } from '../text-box/text-box.component';
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent {
-  title = 'photo-sharing';
+  page = 'collections'
+
+  changePageTo(page: string): void {
+    this.page = page;
+  }
 }

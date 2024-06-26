@@ -1,9 +1,16 @@
 
 <div class="top-row">
     <app-text-box>
-    <div class="title-box">
-        <div class="subtitle">David Bootle's</div>
-        <div class="title">Photo Share</div>
-    </div>
+        <div class="title-box">
+            <div class="subtitle">David Bootle's</div>
+            <div class="title">Photo Share</div>
+        </div>
+    </app-text-box>
+    <app-text-box>
+        <div class="page-selection-box">
+            <div class="control-text" [class.active]="page === 'collections'" (click)="changePageTo('collections')">Collections</div>
+            <div class="seperator"></div>
+            <div class="control-text" [class.active]="page === 'individual'" (click)="changePageTo('individual')">Individual</div>
+        </div>
     </app-text-box>
 </div>
