@@ -4,8 +4,24 @@ import { Component } from '@angular/core';
   selector: 'app-management-page',
   standalone: true,
   imports: [],
-  templateUrl: './management-page.component.html',
-  styleUrl: './management-page.component.scss'
+  template: `
+    <div class="full-page-container">
+        <p>I'm in the middle!</p>
+    </div>
+  `,
+  styles: `
+    .full-page-container {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    p {
+        color: white;
+    }
+  `,
 })
 export class ManagementPageComponent {
 
