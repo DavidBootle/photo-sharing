@@ -5,7 +5,7 @@ import { TextBoxComponent } from './text-box/text-box.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TextBoxComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
